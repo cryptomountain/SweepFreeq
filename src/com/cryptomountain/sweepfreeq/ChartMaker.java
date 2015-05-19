@@ -71,6 +71,7 @@ public class ChartMaker{
 		
 		//LineChart chart = (LineChart)v.findViewById(R.id.chart);
 		// TODO: Throw exceptions instead of returning nothing
+		//     : Move color to settings
 		if(chart == null){
 			return;
 		}
