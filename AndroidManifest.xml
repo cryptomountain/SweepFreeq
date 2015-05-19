@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest android:versionCode="1" android:versionName="1.0"
+    package="com.cryptomountain.sweepfreeq" xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk android:minSdkVersion="13" android:targetSdkVersion="21"/>
+    <application android:allowBackup="true"
+        android:icon="@drawable/ic_sweepfreeq"
+        android:label="@string/app_name" android:theme="@style/AppTheme">
+        <activity android:label="@string/app_name" android:name="com.cryptomountain.sweepfreeq.MainActivity" android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!--created by root at 2015-05-14 09:46:10-->
+        <activity 
+            android:name="com.cryptomountain.sweepfreeq.SerialConsoleActivity" 
+            android:parentActivityName="com.cryptomountain.sweepfreeq.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptomountain.sweepfreeq4.MainActivity"/>
+         </activity>
+    </application>
+</manifest>
