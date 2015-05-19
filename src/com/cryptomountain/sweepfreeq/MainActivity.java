@@ -1,3 +1,9 @@
+/**
+ * @author Joe Culbreth <joe@cryptomountain.com>
+ * 2015-05-19
+ * Copyright © 2015
+ */
+
 package com.cryptomountain.sweepfreeq;
 
 import java.util.concurrent.Executors;
@@ -21,7 +27,7 @@ import com.github.mikephil.charting.charts.LineChart;
 
 public class MainActivity extends ActionBarActivity implements DataUpdateListener {
 	private boolean sweepRunning = false;
-	MyFragment myfrag = null;
+	ParamFragment myfrag = null;
 	Bundle dammit;
 	
 	@Override
@@ -34,10 +40,10 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		//charter.readSweepData();
 		charter.drawGraph(chart);
 		if(savedInstanceState == null){
-			myfrag = (MyFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
+			myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
 		}
 		if (savedInstanceState != null)   {
-			myfrag = (MyFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");			
+			myfrag = (ParamFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");			
 		}
 			 
 	}
@@ -52,7 +58,7 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 	@Override
 	protected void onSaveInstanceState( Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
-		myfrag = (MyFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
+		myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
 		getSupportFragmentManager().putFragment(savedInstanceState, "myFragment", myfrag );
 		
 	}
@@ -60,7 +66,7 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 	  super.onRestoreInstanceState(savedInstanceState);
-	  myfrag = (MyFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
+	  myfrag = (ParamFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
 
 	}
 	

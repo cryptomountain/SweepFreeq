@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/myfragment1"
-        android:name="com.cryptomountain.sweepfreeq.MyFragment"
+        android:name="com.cryptomountain.sweepfreeq.ParamFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -1,3 +1,8 @@
+/**
+ * @author Joe Culbreth <joe@cryptomountain.com>
+ * 2015-05-19
+ * Copyright © 2015
+ */
 package com.cryptomountain.sweepfreeq;
 
 import com.cryptomountain.sweepfreeq.R;
@@ -11,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class MyFragment extends Fragment{
+public class ParamFragment extends Fragment{
 
 
 	@Override
