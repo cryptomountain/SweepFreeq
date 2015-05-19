@@ -1,7 +1,7 @@
 /**
  * @author Joe Culbreth <joe@cryptomountain.com>
  * 05-14-2015
- * Copyright 2015
+ * Copyright © 2015
  * 
  * Reads data from sqlite db and charts it
  * 
