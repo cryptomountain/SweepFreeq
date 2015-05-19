@@ -4,5 +4,5 @@ This is a work in progress - no releases yet.
 
 This project is using these excellent libraries:
 
-https://github.com/PhilJay/MPAndroidChart
+https://github.com/PhilJay/MPAndroidChart<br/>
 https://github.com/mik3y/usb-serial-for-android
