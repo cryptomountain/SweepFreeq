@@ -13,7 +13,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mf_sweep_start"
+            android:text="@string/pf_sweep_start"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="@string/mf_default_start" />
+            android:text="@string/pf_default_start" />
 
     </LinearLayout>
 
@@ -35,7 +35,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mf_sweep_stop"
+            android:text="@string/pf_sweep_stop"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="@string/mf_default_stop" />
+            android:text="@string/pf_default_stop" />
 
     </LinearLayout>
 
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="80dp"
-            android:text="@string/mf_number_of_steps"
+            android:text="@string/pf_number_of_steps"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="@string/mf_default_steps" >
+            android:text="@string/pf_default_steps" >
 
             <requestFocus />
         </EditText>
@@ -87,7 +87,15 @@
             android:onClick="onUsbClick"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="@string/mf_button_usb1" />
+            android:text="@string/pf_button_usb1" />
+
+        <Button
+            android:id="@+id/bluetooth_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onBluetoothClick"
+            android:text="@string/pf_bluetooth_button" />
 
         <TextView
             android:id="@+id/dispFreq"
@@ -95,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/mf_disp_freq"
+            android:text="@string/pf_disp_freq"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -104,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/mf_disp_vswr"
+            android:text="@string/pf_disp_vswr"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>

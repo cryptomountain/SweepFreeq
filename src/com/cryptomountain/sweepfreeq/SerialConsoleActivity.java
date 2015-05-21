@@ -29,15 +29,21 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cryptomountain.sweepfreeq.R;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.HexDump;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
+
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -62,6 +68,8 @@ public class SerialConsoleActivity extends ActionBarActivity {
      * process, and this is a simple demo.
      */
     private static UsbSerialPort sPort = null;
+    private static UsbSerialDriver driver = null;
+    private static UsbDeviceConnection connection = null;
 
     private TextView mTitleTextView;
     private TextView mDumpTextView;
@@ -131,8 +139,9 @@ public class SerialConsoleActivity extends ActionBarActivity {
             }
 
             try {
-                sPort.open(connection);
-                sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            	//
+                //sPort.open(connection);
+                sPort.setParameters(57600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
                 Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
                 mTitleTextView.setText("Error opening device: " + e.getMessage());
@@ -188,6 +197,48 @@ public class SerialConsoleActivity extends ActionBarActivity {
         final Intent intent = new Intent(context, SerialConsoleActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(intent);
+    }
+    
+    public void onConnect(View v) throws IOException{
+    	UsbManager manager  = (UsbManager)getSystemService(Context.USB_SERVICE);
+    	List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+    	if (availableDrivers.isEmpty()) {
+    	  return;
+    	}
+    
+    
+    	// Open a connection to the first available driver.
+		driver = availableDrivers.get(0);
+		connection = manager.openDevice(driver.getDevice());
+		if (connection == null) {
+		  // You probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
+		  return;
+		}
+		
+		// Read some data! Most have just one port (port 0).
+		List<UsbSerialPort>ports = driver.getPorts();
+		sPort = ports.get(0);
+		sPort.open(connection);
+		sPort.setParameters(57600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+		this.onResume();
+    
+    }
+    
+    public void Send(String message) throws IOException{
+    	message+="\r\n";
+    	byte[] data = message.getBytes();
+    	sPort.write(data, 3000);
+    	
+    }
+    
+    public void onSend(View v) throws IOException{
+    	String message = "1000000A16000000B120N?";
+    	EditText et = (EditText)findViewById(R.id.sca_text_to_send);
+    	message = et.getText().toString();
+    	if(message.isEmpty())
+    		message = "1000000A16000000B120N?";
+    	Send(message);
+    	
     }
 
 }

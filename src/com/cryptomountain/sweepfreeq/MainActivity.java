@@ -135,7 +135,8 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 				et2.getText().toString().isEmpty()?30.0F:Float.valueOf(et2.getText().toString()));
 		sweeper.addListener(this);
 		//sweeper.execute((Void[])null);
-		sweeper.executeOnExecutor(Executors.newSingleThreadExecutor(),(Void[])null);
+		//sweeper.executeOnExecutor(Executors.newSingleThreadExecutor(),(Void[])null);
+		sweeper.doSweep();
 	}
 
 	
@@ -143,12 +144,24 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		ChartMaker charter=new ChartMaker(this);
 		LineChart chart=(LineChart)findViewById(R.id.chart);
 		//charter.readSweepData();
-		charter.drawGraph(chart);	
+		charter.drawGraph(chart);
+		float f = charter.getFreqMin();
+		float min = charter.getVswrMin();
+		
+		TextView tvFreq = (TextView)findViewById(R.id.dispFreq);
+		TextView tvVswr = (TextView)findViewById(R.id.dispVswr);
+		tvFreq.setText( String.format("%1$,.3f MHz",f) );
+		tvVswr.setText( String.format("%1$,.2f : 1",min) );
 	}
 		
 	
 	public void onUsbClick(View v){
 		Intent intent = new Intent(this, SerialConsoleActivity.class);
+		startActivity(intent);
+	}
+	
+	public void onBluetoothClick(View v){
+		Intent intent = new Intent(this, BluetoothActivity.class);
 		startActivity(intent);
 	}
 	

@@ -11,12 +11,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class Sweeper extends AsyncTask<Void,SweepData,Void>{
+public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpdateListener,BluetoothUpdateListener{
 	private int steps = 100;
 	private float startFreq = 1.2F;
 	private float stopFreq = 30.0F;
@@ -24,6 +25,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void>{
 	List<DataUpdateListener> listeners = new ArrayList<DataUpdateListener>();
 	private SQLiteDatabase db;
 	private SweepDatabaseHelper dbh;
+	ArrayList<SweepData> inComing=new ArrayList<SweepData>();
 	
 	public Sweeper(Context context){
 		this.context = context;
@@ -46,7 +48,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void>{
 	}
 	
 	/**
-	 * Use this for loading when you don't care if it blocks
+	 * Use this for loading test data when you don't care if it blocks
 	 */
 	public void loadBogusData(){
 		try{
@@ -80,10 +82,39 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void>{
 		}
 	}
 	
-	
+	/**
+	 * Use this to load data buffered in inComing
+	 */
+	public void loadData(){
+		try{
+			dbh = new SweepDatabaseHelper(context);
+			db = dbh.getWritableDatabase();
+			
+			// empty the table
+			db.delete(SweepDatabaseHelper.TABLE_SWEEPDATA, null, null);
+			// start writing the data
+			for(int i=0;i<inComing.size();i++){
+				ContentValues values = new ContentValues();
+				SweepData sdata=new SweepData( (long)i, inComing.get(i).getFreq(), inComing.get(i).getVswr() );
+				values.put(SweepDatabaseHelper.COLUMN_ID, sdata.getId());
+				values.put(SweepDatabaseHelper.COLUMN_FREQ, sdata.getFreq());
+				values.put(SweepDatabaseHelper.COLUMN_VSWR, sdata.getVswr());
+				db.insert(SweepDatabaseHelper.TABLE_SWEEPDATA, null, values);
+			}
+			dbh.close();
+			return;
+		}catch(Exception e){
+			e.printStackTrace();
+			return;
+		}finally{
+			if(db != null && dbh != null && db.isOpen()){
+				db.close();
+			}	
+		}
+	}	
 	/**
 	 * These implement the AsyncTask, and will spin off in a new thread
-	 * 
+	 * for bogus data
 	 */
 	@Override
 	protected Void doInBackground(Void... voids) {
@@ -140,5 +171,71 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void>{
 	 * End of AsyncTask methods
 	 */
 	
+	public void doSweep(){
+		// build command
+		// send command
+		// get new data
+		// load to database
+		// display the graph
+		
+		
+		/*
+		 * * Need this kind of thing to be able to dynamically do different types of connections 
+		 * if(available_connection == usb){
+		 *    UsbConsole connection = new UsbConsole(context)
+		 * }else if( available_connection == bluetooth){
+		 * 	  BluetoothConsole connection = new BluetoothConsole(context);
+		 * }
+		 */
+		
+		UsbConsole connection = new UsbConsole(context);
+		connection.addListener(this);
+		connection.setupConnection();
+		try{
+			connection.open();
+			String command = String.valueOf((long)(startFreq * 1000000)) + "A" + String.valueOf((long)(stopFreq * 1000000)) + "B" + String.valueOf(steps) + "NS";
+			connection.Send(command);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+
+		
+	}
+
+	// Listeners for connection data
+	@Override
+	public void SerialSweepDataUpdated(SweepData data) {
+		if(data != null){
+			inComing.add(data);
+			for(DataUpdateListener du: listeners){
+				du.SweepDataUpdated(data);
+			}
+		}else{
+			loadData();
+			for(DataUpdateListener du: listeners){
+				du.SweepDataUpdated(null);
+			}
+		}
+
+	}
+
+	@Override
+	public void BluetoothSweepDataUpdated(SweepData data) {
+		if(data != null){
+			inComing.add(data);
+			for(DataUpdateListener du: listeners){
+				du.SweepDataUpdated(data);
+			}
+		}else{
+			loadData();
+			for(DataUpdateListener du: listeners){
+				du.SweepDataUpdated(null);
+			}
+		}
+		
+	}
+	
+
 
 }

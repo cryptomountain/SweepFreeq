@@ -3,20 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/demoTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/app_name"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
-        android:layout_below="@+id/demoTitle"
         android:layout_height="1dip"
+        android:layout_below="@+id/demoTitle"
         android:background="#eeeeee" />
     
     <ScrollView
@@ -24,13 +15,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/separator" >
-
-        <TextView
-            android:id="@+id/consoleText"
-            android:textIsSelectable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:typeface="monospace" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/consoleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sca_connect"
+        android:textIsSelectable="true"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/demoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/sca_connect"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onConnect"
+        android:text="@string/sca_connect_button_text" />
+
+    <Button
+        android:id="@+id/sca_send_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sca_connect"
+        android:layout_alignBottom="@+id/sca_connect"
+        android:layout_toRightOf="@+id/sca_connect"
+        android:onClick="onSend"
+        android:text="@string/sca_send_button_text" />
+
+    <EditText
+        android:id="@+id/sca_text_to_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sca_send_button"
+        android:layout_alignBottom="@+id/sca_send_button"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/sca_send_button"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

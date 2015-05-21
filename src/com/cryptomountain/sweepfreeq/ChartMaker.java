@@ -33,6 +33,9 @@ public class ChartMaker{
 	private LineDataSet data;
 	private ArrayList<String> xVals = new ArrayList<String>();
 	public Context context;
+	private float vswrMin = 10.0F;
+	private float freqMin = 1.0F;
+	
 	
 	
 	public ChartMaker(Context context){
@@ -52,7 +55,17 @@ public class ChartMaker{
 		return xVals;
 	}
 	
+	public float getVswrMin(){
+		return vswrMin;
+	}
+	
+	public float getFreqMin(){
+		return freqMin;
+	}
+	
 	public void readSweepData(){
+		vswrMin = 10.0F;
+		freqMin = 1.0F;
 		SweepDataDAO db = new SweepDataDAO(context);
 		ArrayList<Entry> datapoints = new ArrayList<Entry>();
 		db.open();
@@ -61,6 +74,10 @@ public class ChartMaker{
 			Entry e= new Entry(sdata.get(i).getVswr(),(int)sdata.get(i).getId());
 			datapoints.add(e);
 			xVals.add(String.valueOf(sdata.get(i).getFreq()));
+			if(sdata.get(i).getVswr() < vswrMin && sdata.get(i).getVswr() > 0.5F ){
+				vswrMin = sdata.get(i).getVswr();
+				freqMin = sdata.get(i).getFreq();
+			}
 		}
 		data = new LineDataSet(datapoints,"VSWR");
 		db.close();
@@ -96,8 +113,9 @@ public class ChartMaker{
 		data.setAxisDependency(AxisDependency.LEFT);
 		data.setColor(foreground);
 		data.setCircleColor(foreground);
-		data.setCircleSize(3);
+		data.setCircleSize(0.2F);
 		data.setValueTextColor(foreground);
+		data.setLineWidth(4.0F);
 		
 		ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
 		dataSets.add(data);

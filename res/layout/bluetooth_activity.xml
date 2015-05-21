@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".BluetoothActivity" >
+
+  <TextView
+      android:id="@+id/ba_status_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/bt_text"
+      android:textAppearance="?android:attr/textAppearanceLarge" />
+     
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="30dp" >
+
+   <Button
+       android:id="@+id/ba_turnOn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/bt_on" />
+
+   <Button
+       android:id="@+id/ba_turnOff"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/bt_off" />
+
+   </LinearLayout>
+   
+   
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:layout_marginTop="80dp" >
+   
+	   <Button
+	       android:id="@+id/ba_paired"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text="@string/bt_list" />
+	     
+	   <Button
+	       android:id="@+id/ba_search"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:text="@string/bt_find" />
+
+	   <ListView
+	       android:id="@+id/ba_listView1"
+	       android:layout_width="fill_parent"
+	       android:layout_height="200dp" >
+	
+	   </ListView>
+
+   </LinearLayout>
+
+</RelativeLayout>
