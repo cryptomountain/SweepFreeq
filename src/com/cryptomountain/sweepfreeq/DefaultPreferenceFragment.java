@@ -34,27 +34,7 @@ public class DefaultPreferenceFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.default_preferences);
         
-        // Dynamically build Bluetooth devices for selection
-        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        pairedDevices = myBluetoothAdapter.getBondedDevices();
- 
-        // Generate the lists
-        ListPreference listPreferenceCategory = (ListPreference) findPreference("pref_bluetoothDevice");
-        if (listPreferenceCategory != null) {
-            
-            CharSequence entries[] = new String[pairedDevices.size()];
-            CharSequence entryValues[] = new String[pairedDevices.size()];
-            int i=0;
-            for(BluetoothDevice device : pairedDevices){
-                entries[i] = device.getName();
-                entryValues[i] = device.getAddress();
-                i++;
-            }
-            listPreferenceCategory.setEntries(entries);
-            listPreferenceCategory.setEntryValues(entryValues);
-        }
-
-        //addPreferencesFromResource(R.layout.serial_settings_fragment);
+         //addPreferencesFromResource(R.layout.serial_settings_fragment);
     }
 
 }
