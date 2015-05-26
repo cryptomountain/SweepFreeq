@@ -96,6 +96,25 @@
                 android:text="Bluetooth" />
         </RadioGroup>
 
+        <Button
+            android:id="@+id/usb"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onUsbClick"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/pf_button_usb1" />
+
+        <Button
+            android:id="@+id/bluetooth_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onBluetoothClick"
+            android:text="@string/pf_bluetooth_button"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/dispFreq"
             android:layout_width="wrap_content"
@@ -118,24 +137,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/usb"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onUsbClick"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="@string/pf_button_usb1" />
-
-        <Button
-            android:id="@+id/bluetooth_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onBluetoothClick"
-            android:text="@string/pf_bluetooth_button" />
 
     </LinearLayout>
 

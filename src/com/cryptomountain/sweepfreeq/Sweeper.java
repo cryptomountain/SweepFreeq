@@ -19,7 +19,6 @@ import java.util.Random;
 
 public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdateListener{
 	public final static String USB_CONSOLE = "usbConsole";
-	public final static String BLUETOOTH_CONSOLE = "bluetoothConsole";
 	
 	private int steps = 100;
 	private float startFreq = 1.2F;
@@ -185,13 +184,6 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 		// get new data
 		// load to database
 		// display the graph
-
-//		DataConnection connection = null;
-//		//Need this kind of thing to be able to dynamically do different types of connections 
-//		 if(consoleType.equals(USB_CONSOLE))
-//		    connection = new UsbConsole(context);
-//		 else 
-//		 	connection = new BluetoothConsole(context);
 
 		DataConnection connection = new UsbConsole(context);
 		connection.addListener((DataUpdateListener) this);

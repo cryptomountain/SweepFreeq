@@ -60,17 +60,5 @@
     <PreferenceCategory
         android:title="@string/prefcat_usb_settings_title"
         android:key="pref_usb_settings" >
-        
-    </PreferenceCategory>
-        <PreferenceCategory
-        android:title="@string/prefcat_bluetooth_settings_title"
-        android:key="pref_bluetooth_settings" >
-	    <ListPreference
-	        android:key="pref_bluetoothDevice"
-	        android:title="@string/pref_default_bluetoothDevice_title"
-	        android:summary="@string/pref_default_bluetoothDevice_summary"
-	        android:defaultValue="@string/pref_bluetoothDevice"
- />         
-    </PreferenceCategory>
-
+ 	</PreferenceCategory>
 </PreferenceScreen>

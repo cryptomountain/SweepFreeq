@@ -142,7 +142,9 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		UsbManager manager  = (UsbManager)context.getSystemService(Context.USB_SERVICE);
 		List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
 		if (availableDrivers.isEmpty()) {
-		  return;
+			inBuff="End\r\n";
+			processBuffer();
+			return;
 		}
 		
 		// Open a connection to the first available driver.
@@ -162,7 +164,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	public void open(){
 		try{
 			sPort.open(connection);
-			sPort.setParameters(9600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+			sPort.setParameters(baudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 			startIoManager();
 		}catch(IOException e){
 			e.printStackTrace();
@@ -194,7 +196,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	}
 	
 	private void readPrefs(){
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		baudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
 		System.out.print("baudRate = " + baudRate);
 	}
