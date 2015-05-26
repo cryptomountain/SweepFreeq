@@ -93,12 +93,14 @@ public class SerialConsoleActivity extends ActionBarActivity {
 
         @Override
         public void onNewData(final byte[] data) {
+        	Log.i(TAG, "...incoming usb data...");
             SerialConsoleActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     SerialConsoleActivity.this.updateReceivedData(data);
                 }
             });
+            
         }
     };
 
@@ -144,7 +146,7 @@ public class SerialConsoleActivity extends ActionBarActivity {
 
             try {
             	//
-                //sPort.open(connection);
+                sPort.open(connection);
                 sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
                 Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
@@ -222,9 +224,10 @@ public class SerialConsoleActivity extends ActionBarActivity {
 		// Read some data! Most have just one port (port 0).
 		List<UsbSerialPort>ports = driver.getPorts();
 		sPort = ports.get(0);
-		sPort.open(connection);
-		sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+//		sPort.open(connection);
+//		sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 		this.onResume();
+		//startIoManager();
     
     }
     
@@ -236,9 +239,9 @@ public class SerialConsoleActivity extends ActionBarActivity {
     }
     
     public void onSend(View v) throws IOException{
-    	String message = "1000000A16000000B120N?";
+    	
     	EditText et = (EditText)findViewById(R.id.sca_text_to_send);
-    	message = et.getText().toString();
+    	String message = et.getText().toString();
     	if(message.isEmpty())
     		message = "1000000A16000000B120N?";
     	Send(message);
