@@ -199,7 +199,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	
     private void readPrefs(){
 		
-    	SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
     	baudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
 		int dataBitsI = Integer.valueOf(sharedPref.getString("pref_default_data_bits", "8"));
 		String dataParityS = sharedPref.getString("pref_default_parity", "N");

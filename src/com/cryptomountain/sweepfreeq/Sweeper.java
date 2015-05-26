@@ -194,8 +194,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 		    connection = new UsbConsole(context);
 		 else 
 		 	connection = new BluetoothConsole(context);
-
-		connection = new UsbConsole(context);
+		
 		connection.addListener((DataUpdateListener) this);
 		connection.setupConnection();
 		try{

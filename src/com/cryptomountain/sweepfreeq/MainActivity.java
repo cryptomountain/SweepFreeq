@@ -166,7 +166,6 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 	public void drawChart(){
 		ChartMaker charter=new ChartMaker(this);
 		LineChart chart=(LineChart)findViewById(R.id.chart);
-		//charter.readSweepData();
 		charter.drawGraph(chart);
 		float f = charter.getFreqMin();
 		float min = charter.getVswrMin();

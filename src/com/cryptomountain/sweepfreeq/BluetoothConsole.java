@@ -304,6 +304,10 @@ public class BluetoothConsole extends ActionBarActivity implements
 		// Get the serial bluetooth device's MAC address
 		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(context);
 		String dev = SP.getString("pref_bluetoothDevice", "0");
+		if(dev.equals("0")){
+			//No bluetooth devices
+			return;
+		}
 		BluetoothDevice device = btAdapter.getRemoteDevice(dev);
 
 		// Two things are needed to make a connection:
