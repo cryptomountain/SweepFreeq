@@ -28,6 +28,8 @@ import com.github.mikephil.charting.charts.LineChart;
 
 
 public class MainActivity extends ActionBarActivity implements DataUpdateListener {
+	
+	//private static final String BASE64_PUBLIC_KEY = "";
 	private boolean sweepRunning = false;
 	ParamFragment myfrag = null;
 		
