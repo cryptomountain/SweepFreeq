@@ -13,16 +13,17 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter"/>
         </activity>
         <!--created by cryptomountain at 2015-05-14 09:46:10-->
         <activity
             android:name="com.cryptomountain.sweepfreeq.SerialConsoleActivity" android:parentActivityName="com.cryptomountain.sweepfreeq.MainActivity">
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
-            </intent-filter>
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="com.cryptomountain.sweepfreeq.MainActivity"/>
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter"/>
+     
         </activity>
         <activity
             android:name="com.cryptomountain.sweepfreeq.BluetoothActivity" android:parentActivityName="com.cryptomountain.sweepfreeq.MainActivity">

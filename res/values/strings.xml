@@ -38,8 +38,8 @@
     <string name="prefcat_defaults_title">Defaults</string>
     <string name="pref_start_freq_setting_title">Start Freq</string>
     <string name="pref_start_freq_setting_summary">The Sweep Frequency to start with</string>
-    <string name="pref_stop_freq_setting_title">Start Freq</string>
-    <string name="pref_stop_freq_setting_summary">The Sweep Frequency to start with</string>
+    <string name="pref_stop_freq_setting_title">Stop Freq</string>
+    <string name="pref_stop_freq_setting_summary">The Sweep Frequency to end with</string>
     <string name="pref_steps_setting_title">Steps</string>
     <string name="pref_steps_setting_summary">The number of sweep samples to run</string>
 	

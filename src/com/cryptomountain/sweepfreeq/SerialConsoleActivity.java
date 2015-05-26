@@ -224,10 +224,7 @@ public class SerialConsoleActivity extends ActionBarActivity {
 		// Read some data! Most have just one port (port 0).
 		List<UsbSerialPort>ports = driver.getPorts();
 		sPort = ports.get(0);
-//		sPort.open(connection);
-//		sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 		this.onResume();
-		//startIoManager();
     
     }
     
