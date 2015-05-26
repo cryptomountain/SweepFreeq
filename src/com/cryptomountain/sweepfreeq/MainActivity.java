@@ -172,10 +172,7 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		startActivity(intent);
 	}
 	
-	public void onBluetoothClick(View v){
-		Intent intent = new Intent(this, BluetoothActivity.class);
-		startActivity(intent);
-	}
+
 	
 	////////////////////////////////
 	// Useful Message Boxes

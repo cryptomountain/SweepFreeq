@@ -57,8 +57,5 @@
 	        android:entries="@array/flowControl"
 	        android:entryValues="@array/flowControlValues" />       
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/prefcat_usb_settings_title"
-        android:key="pref_usb_settings" >
- 	</PreferenceCategory>
+
 </PreferenceScreen>
