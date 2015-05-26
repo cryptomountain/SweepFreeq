@@ -119,6 +119,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		}
 		
 		// Notify listeners if the sweep is finished
+		// They know the sweep is finished when they get null data
 		if(doneSweeping){
 			for(DataUpdateListener dul: duListeners){
 				dul.SweepDataUpdated(null);
@@ -160,9 +161,10 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	
 
 	public void open(){
+		// TODO: use all the options
 		try{
 			sPort.open(connection);
-			sPort.setParameters(9600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+			sPort.setParameters(baudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 			startIoManager();
 		}catch(IOException e){
 			e.printStackTrace();

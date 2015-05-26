@@ -120,6 +120,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 			}	
 		}
 	}	
+
 	/**
 	 * These implement the AsyncTask, and will spin off in a new thread
 	 * for bogus data
@@ -186,14 +187,15 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 		// load to database
 		// display the graph
 
-//		DataConnection connection = null;
-//		//Need this kind of thing to be able to dynamically do different types of connections 
-//		 if(consoleType.equals(USB_CONSOLE))
-//		    connection = new UsbConsole(context);
-//		 else 
-//		 	connection = new BluetoothConsole(context);
+		DataConnection connection = null;
+		//Need this kind of thing to be able to dynamically do different types of connections
+		// TODO: auto-detect connections
+		 if(consoleType.equals(USB_CONSOLE))
+		    connection = new UsbConsole(context);
+		 else 
+		 	connection = new BluetoothConsole(context);
 
-		DataConnection connection = new UsbConsole(context);
+		connection = new UsbConsole(context);
 		connection.addListener((DataUpdateListener) this);
 		connection.setupConnection();
 		try{
@@ -207,6 +209,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 	}
 
 	// Listeners for connection data
+	// TODO: add error detection
 	@Override
 	public void SweepDataUpdated(SweepData data) {
 		if(data != null){
@@ -220,6 +223,7 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdat
 				du.SweepDataUpdated(null);
 			}
 		}
+		
 
 	}
 

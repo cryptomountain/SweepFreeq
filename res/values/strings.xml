@@ -30,6 +30,7 @@
     <string name="bt_find">Search new Devices / Cancel</string>
     <string name="sca_connect_button_text">Connect</string>
     <string name="sca_send_button_text">Send</string>
+
     <string name="about_author_text">Joe Culbreth - N4AIK</string>
     <string name="about_version_text">Version: 1.0</string>
     <string name="about_build_date_text">Build Date: May 21, 2015</string>
@@ -38,8 +39,8 @@
     <string name="prefcat_defaults_title">Defaults</string>
     <string name="pref_start_freq_setting_title">Start Freq</string>
     <string name="pref_start_freq_setting_summary">The Sweep Frequency to start with</string>
-    <string name="pref_stop_freq_setting_title">Start Freq</string>
-    <string name="pref_stop_freq_setting_summary">The Sweep Frequency to start with</string>
+    <string name="pref_stop_freq_setting_title">Stop Freq</string>
+    <string name="pref_stop_freq_setting_summary">The Sweep Frequency to end with</string>
     <string name="pref_steps_setting_title">Steps</string>
     <string name="pref_steps_setting_summary">The number of sweep samples to run</string>
 	

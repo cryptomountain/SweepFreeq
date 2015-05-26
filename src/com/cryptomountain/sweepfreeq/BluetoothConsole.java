@@ -24,7 +24,8 @@ import android.preference.PreferenceManager;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
-  
+
+// Activity class with no UI
 public class BluetoothConsole extends ActionBarActivity implements
 		DataConnection {
 	private static final String TAG = "bluetooth_console";
@@ -45,8 +46,6 @@ public class BluetoothConsole extends ActionBarActivity implements
 	private static final UUID MY_UUID = UUID
 			.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-	// MAC-address of Bluetooth module (you must edit this line)
-	//private static String address = "20:15:03:03:06:13";
 	private ArrayList<DataUpdateListener> btListeners = new ArrayList<DataUpdateListener>();
 
 	public BluetoothConsole(Context context){
@@ -129,7 +128,6 @@ public class BluetoothConsole extends ActionBarActivity implements
 			try {
 				btSocket.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return;
@@ -164,7 +162,7 @@ public class BluetoothConsole extends ActionBarActivity implements
 
 		Log.d(TAG, "...onResume - try connect...");
 
-		// Set up a pointer to the remote node using it's address.
+		// Get the Bluetooth Serial Device's MAC Address
 		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(context);
 		String dev = SP.getString("pref_bluetoothDevice", "0");
 		BluetoothDevice device = btAdapter.getRemoteDevice(dev);
@@ -210,7 +208,6 @@ public class BluetoothConsole extends ActionBarActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
-
 		Log.d(TAG, "...In onPause()...");
 
 		try {
@@ -245,8 +242,8 @@ public class BluetoothConsole extends ActionBarActivity implements
 	}
 
 	private class ConnectedThread extends Thread {
-		private final InputStream mmInStream;
-		private final OutputStream mmOutStream;
+		private final InputStream inStream;
+		private final OutputStream outStream;
 		//private final BufferedReader inStream;
 
 		public ConnectedThread(BluetoothSocket socket) {
@@ -262,9 +259,8 @@ public class BluetoothConsole extends ActionBarActivity implements
 			} catch (IOException e) {
 			}
 
-			//inStream = in;
-			mmInStream = tmpIn;
-			mmOutStream = tmpOut;
+			inStream = tmpIn;
+			outStream = tmpOut;
 		}
 
 		public void run() {
@@ -275,13 +271,15 @@ public class BluetoothConsole extends ActionBarActivity implements
 			while (true) {
 				try {
 					// Read from the InputStream
-					bytes = mmInStream.read(buffer); // Get number of bytes and
+					bytes = inStream.read(buffer); // Get number of bytes and
 														
 					//String mssg = new String(buffer);
 					//Log.e(TAG,"INCOMING: "+ mssg + "--");
 
+					// Send to message queue Handler
 					h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer)
-							.sendToTarget(); // Send to message queue Handler
+							.sendToTarget(); 
+					//clear the buffer so we don't get old data in the handler
 					buffer = new byte[255];
 				} catch (IOException e) {
 					break;
@@ -294,7 +292,7 @@ public class BluetoothConsole extends ActionBarActivity implements
 			Log.e(TAG, "...Data to send: " + message + "...");
 			byte[] msgBuffer = message.getBytes();
 			try {
-				mmOutStream.write(msgBuffer);
+				outStream.write(msgBuffer);
 			} catch (IOException e) {
 				Log.e(TAG, "...Error data send: " + e.getMessage() + "...");
 			}
@@ -303,7 +301,7 @@ public class BluetoothConsole extends ActionBarActivity implements
 
 	@Override
 	public void setupConnection() {
-		// Set up a pointer to the remote node using it's address.
+		// Get the serial bluetooth device's MAC address
 		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(context);
 		String dev = SP.getString("pref_bluetoothDevice", "0");
 		BluetoothDevice device = btAdapter.getRemoteDevice(dev);

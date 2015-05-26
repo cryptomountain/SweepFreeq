@@ -134,21 +134,21 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		EditText et1=(EditText)findViewById(R.id.editTextStartFreq);
 		EditText et2=(EditText)findViewById(R.id.editTextStopFreq);
 		EditText et3=(EditText)findViewById(R.id.editTextSteps);
-//		RadioGroup serialTypeG = (RadioGroup) findViewById(R.id.radioSerialCommType);
-//		int selectedOption = serialTypeG.getCheckedRadioButtonId();
-//		RadioButton serialTypeB = (RadioButton)findViewById(selectedOption);
-//		String serialType = new String();
-//		if( serialTypeB.getText().toString().equals("USB"))
-//			serialType = Sweeper.USB_CONSOLE;
-//		else
-//			serialType = Sweeper.BLUETOOTH_CONSOLE;
+		RadioGroup serialTypeG = (RadioGroup) findViewById(R.id.radioSerialCommType);
+		int selectedOption = serialTypeG.getCheckedRadioButtonId();
+		RadioButton serialTypeB = (RadioButton)findViewById(selectedOption);
+		String serialType = new String();
+		if( serialTypeB.getText().toString().equals("USB"))
+			serialType = Sweeper.USB_CONSOLE;
+		else
+			serialType = Sweeper.BLUETOOTH_CONSOLE;
 		
 		
 		final Sweeper sweeper = new Sweeper(this, et3.getText().toString().isEmpty()?30:Integer.valueOf(et3.getText().toString()),
 				et1.getText().toString().isEmpty()?1.75F:Float.valueOf(et1.getText().toString()),
 				et2.getText().toString().isEmpty()?30.0F:Float.valueOf(et2.getText().toString()));
 		sweeper.addListener(this);
-		//sweeper.setConsoleType(serialType);
+		sweeper.setConsoleType(serialType);
 		//sweeper.execute((Void[])null);
 		//sweeper.executeOnExecutor(Executors.newSingleThreadExecutor(),(Void[])null);
 		sweeper.doSweep();
