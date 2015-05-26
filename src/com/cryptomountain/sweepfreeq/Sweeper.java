@@ -17,7 +17,10 @@ import java.util.List;
 import java.util.Random;
 
 
-public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpdateListener,BluetoothUpdateListener{
+public class Sweeper extends AsyncTask<Void,SweepData,Void> implements DataUpdateListener{
+	public final static String USB_CONSOLE = "usbConsole";
+	public final static String BLUETOOTH_CONSOLE = "bluetoothConsole";
+	
 	private int steps = 100;
 	private float startFreq = 1.2F;
 	private float stopFreq = 30.0F;
@@ -26,7 +29,8 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 	private SQLiteDatabase db;
 	private SweepDatabaseHelper dbh;
 	ArrayList<SweepData> inComing=new ArrayList<SweepData>();
-	
+	private String consoleType = null;
+		
 	public Sweeper(Context context){
 		this.context = context;
 	}
@@ -45,6 +49,10 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 	
 	public void addListener(DataUpdateListener listener){
 		this.listeners.add(listener);
+	}
+	
+	public void setConsoleType(String type){
+		consoleType = type;
 	}
 	
 	/**
@@ -69,13 +77,13 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 				values.put(SweepDatabaseHelper.COLUMN_VSWR, sdata.getVswr());
 				db.insert(SweepDatabaseHelper.TABLE_SWEEPDATA, null, values);
 				// Notify all the listeners
-				for(DataUpdateListener du: listeners){
-					du.SweepDataUpdated(sdata);
+				for(DataUpdateListener dul: listeners){
+					dul.SweepDataUpdated(sdata);
 				}
 			}
 			dbh.close();
-			for(DataUpdateListener du: listeners){
-				du.SweepDataUpdated(null);
+			for(DataUpdateListener dul: listeners){
+				dul.SweepDataUpdated(null);
 			}
 		}catch(Exception e){
 			// do Nothing at the moment
@@ -177,19 +185,16 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 		// get new data
 		// load to database
 		// display the graph
-		
-		
-		/*
-		 * * Need this kind of thing to be able to dynamically do different types of connections 
-		 * if(available_connection == usb){
-		 *    UsbConsole connection = new UsbConsole(context)
-		 * }else if( available_connection == bluetooth){
-		 * 	  BluetoothConsole connection = new BluetoothConsole(context);
-		 * }
-		 */
-		
-		UsbConsole connection = new UsbConsole(context);
-		connection.addListener(this);
+
+//		DataConnection connection = null;
+//		//Need this kind of thing to be able to dynamically do different types of connections 
+//		 if(consoleType.equals(USB_CONSOLE))
+//		    connection = new UsbConsole(context);
+//		 else 
+//		 	connection = new BluetoothConsole(context);
+
+		DataConnection connection = new UsbConsole(context);
+		connection.addListener((DataUpdateListener) this);
 		connection.setupConnection();
 		try{
 			connection.open();
@@ -198,14 +203,12 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 
-		
 	}
 
 	// Listeners for connection data
 	@Override
-	public void SerialSweepDataUpdated(SweepData data) {
+	public void SweepDataUpdated(SweepData data) {
 		if(data != null){
 			inComing.add(data);
 			for(DataUpdateListener du: listeners){
@@ -219,23 +222,5 @@ public class Sweeper extends AsyncTask<Void,SweepData,Void> implements SerialUpd
 		}
 
 	}
-
-	@Override
-	public void BluetoothSweepDataUpdated(SweepData data) {
-		if(data != null){
-			inComing.add(data);
-			for(DataUpdateListener du: listeners){
-				du.SweepDataUpdated(data);
-			}
-		}else{
-			loadData();
-			for(DataUpdateListener du: listeners){
-				du.SweepDataUpdated(null);
-			}
-		}
-		
-	}
-	
-
 
 }

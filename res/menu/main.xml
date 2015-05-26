@@ -1,14 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.cryptomountain.sweepfreeq4.MainActivity" >
+    tools:context="com.cryptomountain.sweepfreeq.MainActivity" >
 
+    
+    <item android:id="@+id/action_reset" android:title="@string/action_reset" android:titleCondensed="@string/action_reset_condensed" android:orderInCategory="100"></item>
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="110"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
-    <item android:id="@+id/action_reset" android:title="@string/action_reset" android:titleCondensed="@string/action_reset_condensed" android:orderInCategory="101"></item>
-    <item android:id="@+id/action_exit" android:orderInCategory="103" android:title="@string/action_exit"></item>
+    <item android:id="@+id/action_exit" android:orderInCategory="120" android:title="@string/action_exit"></item>
 
 </menu>

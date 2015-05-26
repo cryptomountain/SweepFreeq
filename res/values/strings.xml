@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SweepFreeq4</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">SweepFreeq</string>
     <string name="action_settings">Settings</string>
     <string name="pf_sweep_start">Start Frequency</string>
     <string name="pf_sweep_stop">Stop Frequency</string>
@@ -31,5 +30,42 @@
     <string name="bt_find">Search new Devices / Cancel</string>
     <string name="sca_connect_button_text">Connect</string>
     <string name="sca_send_button_text">Send</string>
+    <string name="about_author_text">Joe Culbreth - N4AIK</string>
+    <string name="about_version_text">Version: 1.0</string>
+    <string name="about_build_date_text">Build Date: May 21, 2015</string>
+    <string name="about_copyright_text">Copyright 2015</string>
+
+    <string name="prefcat_defaults_title">Defaults</string>
+    <string name="pref_start_freq_setting_title">Start Freq</string>
+    <string name="pref_start_freq_setting_summary">The Sweep Frequency to start with</string>
+    <string name="pref_stop_freq_setting_title">Start Freq</string>
+    <string name="pref_stop_freq_setting_summary">The Sweep Frequency to start with</string>
+    <string name="pref_steps_setting_title">Steps</string>
+    <string name="pref_steps_setting_summary">The number of sweep samples to run</string>
+	
+	<string name="prefcat_serial_settings_title">Serial Comm Settings</string>    
+    <string name="pref_baud_rate">9600</string>
+    <string name="pref_default_baud_rate_title">Baud Rate</string>
+    <string name="pref_baud_rate_summary">Baud Rate for Serial Communication</string>
+    <string name="pref_data_bits">8</string>
+    <string name="pref_default_data_bits_title">Data Bits</string>
+    <string name="pref_default_data_bits_summary">Data Bits setting for Serial Communication</string>
+    <string name="pref_parity">N</string>
+    <string name="pref_default_parity_title">Parity</string>
+    <string name="pref_default_parity_summary">Parity setting for Serial Communication</string>
+    <string name="pref_stop_bit">1</string>
+    <string name="pref_default_stop_bit_title">Stop Bit</string>
+    <string name="pref_default_stop_bit_summary">Stop Bit setting for Serial Communication</string>
+    <string name="pref_flow_control">None</string>
+    <string name="pref_default_flow_control_title">Flow Control</string>
+    <string name="pref_default_flow_control_summary">Flow Control setting for Serial Communication</string>
+
+    <string name="prefcat_usb_settings_title">USB Settings</string>
+    
+    <string name="prefcat_bluetooth_settings_title">Bluetooth Settings</string>
+    <string name="pref_bluetoothDevice">No Bluetooth Devices Present</string>
+    <string name="pref_default_bluetoothDevice_title">Bluetooth Device</string>
+    <string name="pref_default_bluetoothDevice_summary">Choose your Bluetooth Serial Device</string>
+   
     
 </resources>

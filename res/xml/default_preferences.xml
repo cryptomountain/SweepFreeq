@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/prefcat_defaults_title"
+        android:key="pref_default_storage_settings">
+    	<EditTextPreference android:title="@string/pref_start_freq_setting_title"
+    	    android:key="pref_startFreq"
+    	    android:summary="@string/pref_start_freq_setting_summary">
+    	</EditTextPreference>
+    	<EditTextPreference android:title="@string/pref_stop_freq_setting_title"
+    	    android:key="pref_stopFreq"
+    	    android:summary="@string/pref_stop_freq_setting_summary">
+    	</EditTextPreference>
+    	<EditTextPreference android:title="@string/pref_steps_setting_title"
+    	    android:key="pref_Steps"
+    	    android:summary="@string/pref_steps_setting_summary">
+    	</EditTextPreference>
+    	
+
+    </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="@string/prefcat_serial_settings_title"
+        android:key="pref_serial_settings" > 
+	    <ListPreference
+	        android:key="pref_default_baud_rate"
+	        android:title="@string/pref_default_baud_rate_title"
+	        android:summary="@string/pref_baud_rate_summary"
+	        android:defaultValue="@string/pref_baud_rate"
+	        android:entries="@array/baudRate"
+	        android:entryValues="@array/baudRateValues" />
+	   	<ListPreference
+	        android:key="pref_default_data_bits"
+	        android:title="@string/pref_default_data_bits_title"
+	        android:summary="@string/pref_default_data_bits_summary"
+	        android:defaultValue="@string/pref_data_bits"
+	        android:entries="@array/dataBits"
+	        android:entryValues="@array/dataBitValues" />
+	   	<ListPreference
+	        android:key="pref_parity"
+	        android:title="@string/pref_default_parity_title"
+	        android:summary="@string/pref_default_parity_summary"
+	        android:defaultValue="@string/pref_parity"
+	        android:entries="@array/parity"
+	        android:entryValues="@array/parityValues" />
+	   	<ListPreference
+	        android:key="pref_default_stop_bit"
+	        android:title="@string/pref_default_stop_bit_title"
+	        android:summary="@string/pref_default_stop_bit_summary"
+	        android:defaultValue="@string/pref_stop_bit"
+	        android:entries="@array/stopBit"
+	        android:entryValues="@array/stopBitValues" /> 
+	    <ListPreference
+	        android:key="pref_default_flow_control"
+	        android:title="@string/pref_default_flow_control_title"
+	        android:summary="@string/pref_default_flow_control_summary"
+	        android:defaultValue="@string/pref_flow_control"
+	        android:entries="@array/flowControl"
+	        android:entryValues="@array/flowControlValues" />       
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/prefcat_usb_settings_title"
+        android:key="pref_usb_settings" >
+        
+    </PreferenceCategory>
+        <PreferenceCategory
+        android:title="@string/prefcat_bluetooth_settings_title"
+        android:key="pref_bluetooth_settings" >
+	    <ListPreference
+	        android:key="pref_bluetoothDevice"
+	        android:title="@string/pref_default_bluetoothDevice_title"
+	        android:summary="@string/pref_default_bluetoothDevice_summary"
+	        android:defaultValue="@string/pref_bluetoothDevice"
+ />         
+    </PreferenceCategory>
+
+</PreferenceScreen>

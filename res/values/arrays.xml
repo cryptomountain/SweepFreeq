@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="baudRate">
+        <item name="1200">1200</item>
+        <item name="2400">2400</item>
+        <item name="4800">4800</item>
+        <item name="9600">9600</item>
+        <item name="14400">14400</item>
+        <item name="19200">19200</item>
+        <item name="28800">28800</item>
+        <item name="38400">38400</item>
+        <item name="57600">57600</item>
+        <item name="115200">115200</item>
+    </string-array>
+    
+    <string-array name="baudRateValues">
+        <item name="1200">1200</item>
+        <item name="2400">2400</item>
+        <item name="4800">4800</item>
+        <item name="9600">9600</item>
+        <item name="14400">14400</item>
+        <item name="19200">19200</item>
+        <item name="28800">28800</item>
+        <item name="38400">38400</item>
+        <item name="57600">57600</item>
+        <item name="115200">115200</item>
+    </string-array>
+    
+    <string-array name="dataBits">
+        <item name="6">6</item>
+        <item name="7">7</item>
+        <item name="8">8</item>
+    </string-array>
+
+    <string-array name="dataBitValues">
+        <item name="6">6</item>
+        <item name="7">7</item>
+        <item name="8">8</item>
+    </string-array>
+    
+    <string-array name="parity">
+        <item name="N">None</item>
+        <item name="E">Even</item>
+        <item name="O">Odd</item>
+    </string-array>
+    <string-array name="parityValues">
+        <item name="N">None</item>
+        <item name="E">Even</item>
+        <item name="O">Odd</item>
+    </string-array>
+    
+    <string-array name="stopBit">
+        <item name="0">0</item>
+        <item name="1.5">1.5</item>
+        <item name="1">1</item>
+    </string-array>
+    <string-array name="stopBitValues">
+        <item name="0">0</item>
+        <item name="1.5">1.5</item>
+        <item name="1">1</item>
+    </string-array>
+    
+    <string-array name="flowControl">
+        <item name="None">None</item>
+        <item name="Hardware">Hardware</item>
+        <item name="Software">Software</item>
+    </string-array>
+    <string-array name="flowControlValues">
+        <item name="None">None</item>
+        <item name="Hardware">Hardware</item>
+        <item name="Software">Software</item>
+    </string-array>
+    
+</resources>

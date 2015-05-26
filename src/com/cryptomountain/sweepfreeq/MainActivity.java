@@ -14,10 +14,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 //import android.widget.LinearLayout;
 
@@ -28,22 +31,21 @@ import com.github.mikephil.charting.charts.LineChart;
 public class MainActivity extends ActionBarActivity implements DataUpdateListener {
 	private boolean sweepRunning = false;
 	ParamFragment myfrag = null;
-	Bundle dammit;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dammit = new Bundle();
+		PreferenceManager.setDefaultValues(this, R.xml.default_preferences, false);
 		setContentView(R.layout.activity_main);
 		ChartMaker charter=new ChartMaker(this);
 		LineChart chart=(LineChart)findViewById(R.id.chart);
 		//charter.readSweepData();
 		charter.drawGraph(chart);
 		if(savedInstanceState == null){
-			myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
+			myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.paramFragment);
 		}
 		if (savedInstanceState != null)   {
-			myfrag = (ParamFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");			
+			myfrag = (ParamFragment) getSupportFragmentManager().getFragment(savedInstanceState, "paramFragment");			
 		}
 			 
 	}
@@ -58,8 +60,8 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 	@Override
 	protected void onSaveInstanceState( Bundle savedInstanceState){
 		super.onSaveInstanceState(savedInstanceState);
-		myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.myfragment1);
-		getSupportFragmentManager().putFragment(savedInstanceState, "myFragment", myfrag );
+		myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.paramFragment);
+		getSupportFragmentManager().putFragment(savedInstanceState, "paramFragment", myfrag );
 		
 	}
 	
@@ -89,6 +91,8 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent settingIntent =  new Intent(this, SettingsActivity.class);
+			startActivity(settingIntent);
 			return true;
 		}
 		if(id == R.id.action_reset){
@@ -130,10 +134,21 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		EditText et1=(EditText)findViewById(R.id.editTextStartFreq);
 		EditText et2=(EditText)findViewById(R.id.editTextStopFreq);
 		EditText et3=(EditText)findViewById(R.id.editTextSteps);
+//		RadioGroup serialTypeG = (RadioGroup) findViewById(R.id.radioSerialCommType);
+//		int selectedOption = serialTypeG.getCheckedRadioButtonId();
+//		RadioButton serialTypeB = (RadioButton)findViewById(selectedOption);
+//		String serialType = new String();
+//		if( serialTypeB.getText().toString().equals("USB"))
+//			serialType = Sweeper.USB_CONSOLE;
+//		else
+//			serialType = Sweeper.BLUETOOTH_CONSOLE;
+		
+		
 		final Sweeper sweeper = new Sweeper(this, et3.getText().toString().isEmpty()?30:Integer.valueOf(et3.getText().toString()),
 				et1.getText().toString().isEmpty()?1.75F:Float.valueOf(et1.getText().toString()),
 				et2.getText().toString().isEmpty()?30.0F:Float.valueOf(et2.getText().toString()));
 		sweeper.addListener(this);
+		//sweeper.setConsoleType(serialType);
 		//sweeper.execute((Void[])null);
 		//sweeper.executeOnExecutor(Executors.newSingleThreadExecutor(),(Void[])null);
 		sweeper.doSweep();

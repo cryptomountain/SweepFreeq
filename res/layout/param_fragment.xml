@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/about_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pf_sweep_start"
@@ -24,7 +24,6 @@
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="@string/pf_default_start" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -46,7 +45,6 @@
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="@string/pf_default_stop" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +70,49 @@
 
             <requestFocus />
         </EditText>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioGroup
+            android:id="@+id/radioSerialCommType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/radioUsb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="USB" />
+
+            <RadioButton
+                android:id="@+id/radioBluetooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/dispFreq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pf_disp_freq"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/dispVswr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pf_disp_vswr"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
     <LinearLayout
@@ -96,24 +136,6 @@
             android:layout_height="wrap_content"
             android:onClick="onBluetoothClick"
             android:text="@string/pf_bluetooth_button" />
-
-        <TextView
-            android:id="@+id/dispFreq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/pf_disp_freq"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/dispVswr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/pf_disp_vswr"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 

@@ -8,8 +8,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbDeviceConnection;
@@ -30,10 +32,11 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	private UsbSerialDriver driver;
 	private UsbSerialPort sPort;
 	private UsbDeviceConnection connection = null;
-	private ArrayList<SerialUpdateListener> suListeners = new ArrayList<SerialUpdateListener>();
+	private ArrayList<DataUpdateListener> duListeners = new ArrayList<DataUpdateListener>();
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	
 	private String inBuff = new String();
+	private int baudRate = 9600;
 	
 	
 	private final SerialInputOutputManager.Listener mListener =
@@ -82,7 +85,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	 }
 	
 	protected void updateReceivedData(byte[] data) {
-		String newdata = null;
+		
 		try{
 			inBuff+= new String(data, "UTF-8");
 		}catch(Exception e){
@@ -117,21 +120,21 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		
 		// Notify listeners if the sweep is finished
 		if(doneSweeping){
-			for(SerialUpdateListener sul: suListeners){
-				sul.SerialSweepDataUpdated(null);
+			for(DataUpdateListener dul: duListeners){
+				dul.SweepDataUpdated(null);
 			}
 			return;
 		}
 		
 		// Notifiy listeners that new data is available
-		for(SerialUpdateListener sul: suListeners){
-			sul.SerialSweepDataUpdated(sd);
+		for(DataUpdateListener dul: duListeners){
+			dul.SweepDataUpdated(sd);
 		}
 		
 	}
 	
-	public void addListener(SerialUpdateListener listener){
-		this.suListeners.add(listener);
+	public void addListener(DataUpdateListener listener){
+		this.duListeners.add(listener);
 	}
 	
 	
@@ -152,13 +155,14 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		
 		List<UsbSerialPort>ports = driver.getPorts();
 		sPort = ports.get(0);
+		readPrefs();
 	}
 	
 
 	public void open(){
 		try{
 			sPort.open(connection);
-			sPort.setParameters(57600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+			sPort.setParameters(9600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 			startIoManager();
 		}catch(IOException e){
 			e.printStackTrace();
@@ -188,6 +192,11 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	public UsbSerialPort getPort(){
 		return sPort;
 	}
-
+	
+	private void readPrefs(){
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		baudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
+		System.out.print("baudRate = " + baudRate);
+	}
 
 }

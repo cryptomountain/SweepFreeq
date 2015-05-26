@@ -23,8 +23,10 @@ package com.cryptomountain.sweepfreeq;
 
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.support.v7.app.ActionBarActivity;
@@ -67,6 +69,8 @@ public class SerialConsoleActivity extends ActionBarActivity {
      * can get away with it because both activities will run in the same
      * process, and this is a simple demo.
      */
+    
+    private int serialBaudRate = 9600;
     private static UsbSerialPort sPort = null;
     private static UsbSerialDriver driver = null;
     private static UsbDeviceConnection connection = null;
@@ -141,7 +145,7 @@ public class SerialConsoleActivity extends ActionBarActivity {
             try {
             	//
                 //sPort.open(connection);
-                sPort.setParameters(57600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+                sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
                 Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
                 mTitleTextView.setText("Error opening device: " + e.getMessage());
@@ -195,7 +199,7 @@ public class SerialConsoleActivity extends ActionBarActivity {
     static void show(Context context, UsbSerialPort port) {
         sPort = port;
         final Intent intent = new Intent(context, SerialConsoleActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(intent);
     }
     
@@ -214,12 +218,12 @@ public class SerialConsoleActivity extends ActionBarActivity {
 		  // You probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
 		  return;
 		}
-		
+		setBaudRate();
 		// Read some data! Most have just one port (port 0).
 		List<UsbSerialPort>ports = driver.getPorts();
 		sPort = ports.get(0);
 		sPort.open(connection);
-		sPort.setParameters(57600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+		sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 		this.onResume();
     
     }
@@ -238,6 +242,16 @@ public class SerialConsoleActivity extends ActionBarActivity {
     	if(message.isEmpty())
     		message = "1000000A16000000B120N?";
     	Send(message);
+    	
+    }
+    
+    public void setBaudRate(){
+    	SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	serialBaudRate = Integer.valueOf(SP.getString("pref_baud_rate", "9600"));;
+    }
+    
+    public void setBaudRate(int newbaud){
+    	serialBaudRate=newbaud;
     	
     }
 

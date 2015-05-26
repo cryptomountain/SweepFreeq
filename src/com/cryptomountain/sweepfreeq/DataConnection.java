@@ -9,5 +9,7 @@ public interface DataConnection {
 	public void setupConnection();
 	public void open();
 	public void Send(String datastring);
+	public void addListener(DataUpdateListener listener);
+	
 
 }
