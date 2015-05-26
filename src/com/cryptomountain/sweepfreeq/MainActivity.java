@@ -49,6 +49,13 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		et2.setText(prefs.getString("pref_stopFreq", "28.1"));
 		et3.setText(prefs.getString("pref_Steps", "110"));
 		
+		RadioGroup serialTypeG = (RadioGroup) findViewById(R.id.radioSerialCommType);
+		String defaultType = prefs.getString("pref_default_device_type", "bluetooth");
+		if(defaultType.equals("usb"))
+			serialTypeG.check(R.id.radioUsb);
+		else
+			serialTypeG.check(R.id.radioBluetooth);
+			
 		if(savedInstanceState == null){
 			myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.paramFragment);
 		}

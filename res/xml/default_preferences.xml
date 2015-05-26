@@ -3,6 +3,13 @@
     <PreferenceCategory 
         android:title="@string/prefcat_defaults_title"
         android:key="pref_default_storage_settings">
+    	<ListPreference
+	        android:key="pref_default_device_type"
+	        android:title="@string/pref_default_device_type_title"
+	        android:summary="@string/pref_default_device_type_summary"
+	        android:defaultValue="@string/pref_device_type"
+	        android:entries="@array/deviceTypes"
+	        android:entryValues="@array/deviceTypeValues" />
     	<EditTextPreference android:title="@string/pref_start_freq_setting_title"
     	    android:key="pref_startFreq"
     	    android:summary="@string/pref_start_freq_setting_summary">

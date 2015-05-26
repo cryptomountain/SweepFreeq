@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="deviceTypes">
+        <item name="usb">USB</item>
+        <item name="bluetooth">Bluetooth</item>
+    </string-array>
+
+    <string-array name="deviceTypeValues">
+        <item name="usb">usb</item>
+        <item name="bluetooth">bluetooth</item>
+    </string-array>
+
     <string-array name="baudRate">
         <item name="1200">1200</item>
         <item name="2400">2400</item>

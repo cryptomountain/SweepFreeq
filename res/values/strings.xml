@@ -37,6 +37,10 @@
     <string name="about_copyright_text">Copyright 2015</string>
 
     <string name="prefcat_defaults_title">Defaults</string>
+    
+    <string name="pref_device_type">usb</string>
+    <string name="pref_default_device_type_title">Startup Device Type</string>
+    <string name="pref_default_device_type_summary">Start the program with USB or Bluetooth device</string>
     <string name="pref_start_freq_setting_title">Start Freq</string>
     <string name="pref_start_freq_setting_summary">The Sweep Frequency to start with</string>
     <string name="pref_stop_freq_setting_title">Stop Freq</string>
