@@ -17,6 +17,8 @@
  * USA.
  *
  * Project home page: https://github.com/mik3y/usb-serial-for-android
+ * 
+ * 2015-05-26 Adopted for sweepfreeq - Joe Culbreth <joe@n4aik.com>
  */
 
 package com.cryptomountain.sweepfreeq;
@@ -71,7 +73,11 @@ public class SerialConsoleActivity extends ActionBarActivity {
      */
     
     private int serialBaudRate = 9600;
-    private static UsbSerialPort sPort = null;
+	private int dataBits;
+	private int parity;
+	private int stopBits;
+
+	private static UsbSerialPort sPort = null;
     private static UsbSerialDriver driver = null;
     private static UsbDeviceConnection connection = null;
 
@@ -98,10 +104,14 @@ public class SerialConsoleActivity extends ActionBarActivity {
                 public void run() {
                     SerialConsoleActivity.this.updateReceivedData(data);
                 }
+
             });
+
         }
     };
 
+    
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +155,7 @@ public class SerialConsoleActivity extends ActionBarActivity {
             try {
             	//
                 //sPort.open(connection);
-                sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+                sPort.setParameters(serialBaudRate, dataBits, stopBits, parity);
             } catch (IOException e) {
                 Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
                 mTitleTextView.setText("Error opening device: " + e.getMessage());
@@ -218,12 +228,10 @@ public class SerialConsoleActivity extends ActionBarActivity {
 		  // You probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
 		  return;
 		}
-		setBaudRate();
+		readPrefs();
 		// Read some data! Most have just one port (port 0).
 		List<UsbSerialPort>ports = driver.getPorts();
 		sPort = ports.get(0);
-		sPort.open(connection);
-		sPort.setParameters(serialBaudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
 		this.onResume();
     
     }
@@ -236,23 +244,76 @@ public class SerialConsoleActivity extends ActionBarActivity {
     }
     
     public void onSend(View v) throws IOException{
-    	String message = "1000000A16000000B120N?";
+    	
     	EditText et = (EditText)findViewById(R.id.sca_text_to_send);
-    	message = et.getText().toString();
+    	String message = et.getText().toString();
     	if(message.isEmpty())
     		message = "1000000A16000000B120N?";
     	Send(message);
     	
     }
     
-    public void setBaudRate(){
-    	SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-    	serialBaudRate = Integer.valueOf(SP.getString("pref_baud_rate", "9600"));;
-    }
-    
     public void setBaudRate(int newbaud){
     	serialBaudRate=newbaud;
     	
     }
-
+    
+    private void readPrefs(){
+		
+    	SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	serialBaudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
+		int dataBitsI = Integer.valueOf(sharedPref.getString("pref_default_data_bits", "8"));
+		String dataParityS = sharedPref.getString("pref_default_parity", "N");
+		String dataStopBitsS = sharedPref.getString("pref_default_stop_bit", "1");
+		switch ( dataBitsI){
+			case 6:
+				dataBits = UsbSerialPort.DATABITS_6;
+				break;
+			case 7:
+				dataBits = UsbSerialPort.DATABITS_7;
+				break;
+			case 8:
+				dataBits = UsbSerialPort.DATABITS_8;
+				break;
+			default:
+				dataBits = UsbSerialPort.DATABITS_8;
+		
+		}
+		
+		switch( dataParityS){
+			case "N":
+				parity = UsbSerialPort.PARITY_NONE;
+				break;
+			case "E":
+				parity = UsbSerialPort.PARITY_EVEN;
+				break;
+			case "O":
+				parity = UsbSerialPort.PARITY_ODD;
+				break;
+			case "M":
+				parity = UsbSerialPort.PARITY_MARK;
+				break;
+			default:
+				parity = UsbSerialPort.PARITY_NONE;
+					
+		}
+		
+		switch(dataStopBitsS){
+			case "1":
+				stopBits = UsbSerialPort.STOPBITS_1;
+				break;
+			case "1.5":
+				stopBits = UsbSerialPort.STOPBITS_1_5;
+				break;
+			case "2":
+				stopBits = UsbSerialPort.STOPBITS_2;
+				break;
+			default:
+				stopBits = UsbSerialPort.STOPBITS_1;
+				
+		}
+		
+		Log.v(TAG, "Serial Prefs: baud=" + serialBaudRate +", Data=" + dataBitsI + ", Parity=" + dataParityS + ", StopBits=" + dataStopBitsS);
+	}
+  
 }

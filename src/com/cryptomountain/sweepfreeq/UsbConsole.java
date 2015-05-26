@@ -37,7 +37,9 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 	
 	private String inBuff = new String();
 	private int baudRate = 9600;
-	
+	private int dataBits;
+	private int parity;
+	private int stopBits;	
 	
 	private final SerialInputOutputManager.Listener mListener =
             new SerialInputOutputManager.Listener() {
@@ -164,7 +166,7 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		// TODO: use all the options
 		try{
 			sPort.open(connection);
-			sPort.setParameters(baudRate, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+			sPort.setParameters(baudRate, dataBits, stopBits, parity);
 			startIoManager();
 		}catch(IOException e){
 			e.printStackTrace();
@@ -195,10 +197,62 @@ public class UsbConsole extends ActionBarActivity implements DataConnection{
 		return sPort;
 	}
 	
-	private void readPrefs(){
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		baudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
-		System.out.print("baudRate = " + baudRate);
+    private void readPrefs(){
+		
+    	SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	baudRate = Integer.valueOf(sharedPref.getString("pref_default_baud_rate", ""));
+		int dataBitsI = Integer.valueOf(sharedPref.getString("pref_default_data_bits", "8"));
+		String dataParityS = sharedPref.getString("pref_default_parity", "N");
+		String dataStopBitsS = sharedPref.getString("pref_default_stop_bit", "1");
+		switch ( dataBitsI){
+			case 6:
+				dataBits = UsbSerialPort.DATABITS_6;
+				break;
+			case 7:
+				dataBits = UsbSerialPort.DATABITS_7;
+				break;
+			case 8:
+				dataBits = UsbSerialPort.DATABITS_8;
+				break;
+			default:
+				dataBits = UsbSerialPort.DATABITS_8;
+		
+		}
+		
+		switch( dataParityS){
+			case "N":
+				parity = UsbSerialPort.PARITY_NONE;
+				break;
+			case "E":
+				parity = UsbSerialPort.PARITY_EVEN;
+				break;
+			case "O":
+				parity = UsbSerialPort.PARITY_ODD;
+				break;
+			case "M":
+				parity = UsbSerialPort.PARITY_MARK;
+				break;
+			default:
+				parity = UsbSerialPort.PARITY_NONE;
+					
+		}
+		
+		switch(dataStopBitsS){
+			case "1":
+				stopBits = UsbSerialPort.STOPBITS_1;
+				break;
+			case "1.5":
+				stopBits = UsbSerialPort.STOPBITS_1_5;
+				break;
+			case "2":
+				stopBits = UsbSerialPort.STOPBITS_2;
+				break;
+			default:
+				stopBits = UsbSerialPort.STOPBITS_1;
+				
+		}
+		
+		Log.v(TAG, "Serial Prefs: baud=" + baudRate +", Data=" + dataBitsI + ", Parity=" + dataParityS + ", StopBits=" + dataStopBitsS);
 	}
 
 }

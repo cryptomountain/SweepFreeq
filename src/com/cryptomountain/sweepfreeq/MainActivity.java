@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,7 +23,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-//import android.widget.LinearLayout;
 
 import com.cryptomountain.sweepfreeq.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,8 +39,16 @@ public class MainActivity extends ActionBarActivity implements DataUpdateListene
 		setContentView(R.layout.activity_main);
 		ChartMaker charter=new ChartMaker(this);
 		LineChart chart=(LineChart)findViewById(R.id.chart);
-		//charter.readSweepData();
 		charter.drawGraph(chart);
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		EditText et1=(EditText)findViewById(R.id.editTextStartFreq);
+		EditText et2=(EditText)findViewById(R.id.editTextStopFreq);
+		EditText et3=(EditText)findViewById(R.id.editTextSteps);
+		et1.setText(prefs.getString("pref_startFreq", "1.25"));
+		et2.setText(prefs.getString("pref_stopFreq", "28.1"));
+		et3.setText(prefs.getString("pref_Steps", "110"));
+		
 		if(savedInstanceState == null){
 			myfrag = (ParamFragment)getSupportFragmentManager().findFragmentById(R.id.paramFragment);
 		}
